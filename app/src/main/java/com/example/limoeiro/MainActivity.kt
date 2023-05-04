@@ -17,6 +17,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,19 +51,60 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun Limoeiro() {
+
+    var tela by remember { mutableStateOf(value = 1) }
+
+    when(tela) {
+        1 -> Comofazerlimonada(
+            R.string.limoeiro,
+            R.drawable.limoeiro,
+        onImagemClick = {
+            tela = 2
+
+            }
+        )
+        2 -> Comofazerlimonada(
+            R.string.limao,
+            R.drawable.limonada,
+            onImagemClick = {
+                tela = 3
+
+            }
+        )
+        3 -> Comofazerlimonada(
+            R.string.copo_de_limonada,
+            R.drawable.copo_limonada,
+            onImagemClick = {
+                tela = 4
+
+            }
+        )
+        4 -> Comofazerlimonada(
+            R.string.copo_vazio,
+            R.drawable.reiniciar,
+            onImagemClick = {
+                tela = 1
+
+            }
+        )
+
+    }
+}
+@Composable
+fun Comofazerlimonada(recursoTextoId: Int, recursoImageId: Int, onImagemClick:()->Unit){
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = stringResource(R.string.limoeiro),
-            fontSize = 20.sp,
+            text = stringResource(recursoTextoId),
+            fontSize = 19.sp,
             modifier = Modifier.padding(bottom = 20.dp)
         )
 
         Image(
-            painter = painterResource(id = R.drawable.limoeiro),
+            painter = painterResource(id = recursoImageId),
             contentDescription = null,
             modifier = Modifier
                 .size(300.dp)
@@ -67,9 +112,11 @@ fun Limoeiro() {
                     BorderStroke(2.dp, Color.Cyan),
                     RoundedCornerShape(15.dp)
                 )
+                .clickable(onClick =onImagemClick)
 
         )
     }
+
 }
 
 
