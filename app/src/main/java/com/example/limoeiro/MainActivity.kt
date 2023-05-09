@@ -51,8 +51,9 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun Limoeiro() {
+  var espremer by remember { mutableStateOf(1) }
 
-    var tela by remember { mutableStateOf(value = 1) }
+    var tela by remember { mutableStateOf( 1) }
 
     when(tela) {
         1 -> Comofazerlimonada(
@@ -60,6 +61,7 @@ fun Limoeiro() {
             R.drawable.limoeiro,
         onImagemClick = {
             tela = 2
+            espremer = (2..4).random()
 
             }
         )
@@ -67,6 +69,9 @@ fun Limoeiro() {
             R.string.limao,
             R.drawable.limonada,
             onImagemClick = {
+                if (espremer>1)
+                       espremer--
+                else
                 tela = 3
 
             }
@@ -112,7 +117,7 @@ fun Comofazerlimonada(recursoTextoId: Int, recursoImageId: Int, onImagemClick:()
                     BorderStroke(2.dp, Color.Cyan),
                     RoundedCornerShape(15.dp)
                 )
-                .clickable(onClick =onImagemClick)
+                .clickable(onClick = onImagemClick)
 
         )
     }
